@@ -24,15 +24,12 @@ public class SortedIntegerList {
     }
 
     ListIterator<Integer> itr = this.getIterator();
-    int current = itr.next();
-    for (int i = 0; itr.hasNext(); i++) {
+    for (int i = 0; i < this.getSize(); i++) {
+      int current = itr.next();
       if (current == value && !this.allowsEqualElements()) {
         return false;
       }
-      if (value > current) {
-        current = itr.next();
-        continue;
-      } else {
+      if (!(value > current)) {
         this.list.add(i, value);
         return true;
       }
@@ -46,8 +43,10 @@ public class SortedIntegerList {
     if (idx != -1) {
       this.list.remove(idx);
       if (this.allowsEqualElements()) {
+        idx = this.list.indexOf(value);
         while (idx != -1) {
           this.list.remove(idx);
+          idx = this.list.indexOf(value);
         }
       }
       return true;
@@ -84,7 +83,7 @@ public class SortedIntegerList {
       }
       ListIterator<Integer> thisItr = this.getIterator();
       ListIterator<Integer> opItr = opCast.getIterator();
-      while(thisItr.hasNext() && opItr.hasNext()) {
+      while (thisItr.hasNext() && opItr.hasNext()) {
         if (thisItr.next() != opItr.next()) {
           return false;
         }
