@@ -30,7 +30,9 @@ public class SortedIntegerList {
         return false;
       }
       if (!(value > current)) {
-        this.list.add(i, value);
+        itr.previous();
+        itr.add(value);
+        // this.list.add(i, value);
         return true;
       }
     }
@@ -39,19 +41,32 @@ public class SortedIntegerList {
   }
 
   public boolean remove(int value) {
-    int idx = this.list.indexOf(value);
-    if (idx != -1) {
-      this.list.remove(idx);
-      if (this.allowsEqualElements()) {
-        idx = this.list.indexOf(value);
-        while (idx != -1) {
-          this.list.remove(idx);
-          idx = this.list.indexOf(value);
-        }
+    boolean success = false;
+    ListIterator<Integer> itr= this.getIterator();
+    int current;
+    while (itr.hasNext()) {
+      current = itr.next();
+      if (current == value) {
+        itr.remove();
+        success = true;
       }
-      return true;
     }
-    return false;
+
+    return success;
+    // int idx = this.list.indexOf(value);
+    // if (idx != -1) {
+    //   this.list.remove(idx);
+    //   if (this.allowsEqualElements()) {
+    //     idx = this.list.indexOf(value);
+    //     while (idx != -1) {
+    //       // this.list.remove(idx);
+
+    //       idx = this.list.indexOf(value);
+    //     }
+    //   }
+    //   return true;
+    // }
+    // return false;
   }
 
   public int getSize() {
@@ -113,4 +128,37 @@ public class SortedIntegerList {
   public void log() {
     System.out.println(this.toString());
   }
+
+  /* Additional task */
+
+  public SortedIntegerList remove(SortedIntegerList op) {
+    ListIterator<Integer> thisItr = this.getIterator();
+    ListIterator<Integer> opItr;
+    SortedIntegerList result = new SortedIntegerList(this.allowsEqualElements);
+    int current, currentOp;
+    boolean currentElementIsInOpList = false;
+
+    while (thisItr.hasNext()) {
+      current = thisItr.next();
+      opItr = op.getIterator();
+      currentElementIsInOpList = false;
+
+      while (opItr.hasNext()) {
+        currentOp = opItr.next();
+        if (current < currentOp) {
+          break;
+        }
+        if (currentOp == current) {
+          currentElementIsInOpList = true;
+          break;
+        }
+      }
+
+      if (!currentElementIsInOpList) {
+        result.add(current);
+      }
+    }
+    return result;
+  }
+
 }

@@ -1,3 +1,22 @@
+/*
+* Напишите класс SortedIntegerList, который хранит отсортированный
+* в порядке возрастания список целых чисел. Внутри класса список
+* должен храниться с помощью LinkedList. У SortedInteger List должны
+* быть определены:
+
+* Конструктор   с булевским параметром; если этот параметр принимает
+* значение true, то в создаваемом списке разрешены повторяющиеся
+* элементы, иначе --- нет; Методы add(int) и remove(int), которые,
+* соответственно, добавляют число в список и удаляют число из списка;
+* если добавление (удаление) невозможно --- метод не делает ничего;
+* Метод   equals();
+
+* Напишите программу, проверяющую работу класса SortedIntegerList.
+
+* Постарайтесь реализовать возможно полный набор проверок.
+*/
+
+
 package mySortedIntegerList.src;
 
 import mySortedIntegerList.src.SortedIntegerList;
@@ -41,6 +60,23 @@ public class App {
 
     list2.log();
     list3.log();
+    /* Additional task */
+    log("Additonal task:");
+    SortedIntegerList aList = new SortedIntegerList(true);
+    SortedIntegerList aList2 = new SortedIntegerList(true);
+
+    aList.add(1);
+    aList.add(2);
+    aList.add(3);
+    aList.add(4);
+    aList.add(5);
+
+    aList2.add(1);
+    aList2.add(3);
+    aList2.add(5);
+
+    SortedIntegerList result = aList.remove(aList2);
+    log(result.toString());
   }
 
   public static void log(String msg) {
